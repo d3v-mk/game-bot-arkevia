@@ -1,0 +1,21 @@
+# .gitignore basico 
+# (descomentar # do .env e do .gitignore)
+
+# macOS
+.DS_Store
+
+# Variáveis de ambiente
+.env
+
+# WhatsApp Web session/cache
+#.wwebjs_auth/
+#.wwebjs_cache/
+
+# Pasta Auth do @whiskeysockets/baileys
+auth/
+
+# Git
+#.gitignore
+
+# Modulos do node
+node_modules/

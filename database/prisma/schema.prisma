@@ -1,0 +1,232 @@
+/// 🔧 Arquivo schema.prisma
+/// 
+/// Esse é o arquivo principal de configuração do Prisma.
+/// Aqui você define:
+/// - O banco de dados que será usado (datasource)
+/// - O client que será gerado (generator)
+/// - E todos os modelos do banco (model, enum, etc)
+///
+/// Comandos úteis:
+/// - `npx prisma generate` → Cria o Prisma Client
+/// - `npx prisma migrate dev` → Aplica as migrations
+///
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+
+
+// ==============================
+// 📦 Model: Jogador
+// ==============================
+
+model Jogador {
+  @@map("jogador")
+
+  // === CADASTRO ==
+  id         String     @id @default(uuid())
+  nome       String
+  numeroWpp  String     @unique
+  email      String?    @unique
+  sexo       Sexo?
+
+  // === STATS IN-GAME ===
+  moedas       Int        @default(0)      // Dinheiro in-game
+  xp           Int        @default(0)      
+  level        Int        @default(1)
+  hpAtual      Int        @default(100)    // Vida atual do jogador
+  hpMaximo     Int        @default(100)    // Vida máxima (pode aumentar com nível ou itens)
+  mana         Int        @default(100)    // Mana para magos
+  energia      Int        @default(100)    // Energia para o resto das classes
+  forca        Int        @default(10)
+  defesa       Int        @default(10)
+  agilidade    Int        @default(10)
+  inteligencia Int        @default(10)
+  sorte        Int        @default(5)
+
+  // === ADMIN ===
+  isAdmin     Boolean  @default(false)
+
+  // === CLASSE ===
+  classeId   String?
+  classe     Classes?   @relation(fields: [classeId], references: [id])
+
+  // === INVENTARIO ===
+  inventario Inventario[]    // Relação inversa
+  criadoEm   DateTime   @default(now())
+
+  // === GUILDA ===
+  guildaLiderada Guilda[] @relation("LiderDaGuilda")
+  guildasMembro  Guilda[] @relation("MembrosDaGuilda")
+
+  // === LOCALIZACAO NO MAPA ===
+  localizacaoAtualId  String?  
+  localizacaoAtual    Mapa? @relation(fields: [localizacaoAtualId], references: [id])
+  viajando            Boolean  @default(false) // verifica se ja ta viajando
+}
+
+
+
+
+
+// ==============================
+// ⚔️ Model: Classes
+// ==============================
+
+model Classes {
+  @@map("classes")
+
+  id          String        @id     // Ex: "guerreiro", "mago"
+  nome        String
+  descricao   String
+  habilidades Habilidades[]         // Relação inversa
+  jogadores   Jogador[]             // Relação inversa
+}
+
+
+
+
+// ==============================
+// 🌀 Model: Habilidades
+// ==============================
+
+model Habilidades {
+  @@map("habilidades")
+
+  id           String   @id // Ex: "golpe_furioso"
+  nome         String
+  descricao    String
+  xpRequerido  Int
+  custoEnergia Int
+  classeId     String
+  classe       Classes  @relation(fields: [classeId], references: [id])
+}
+
+
+
+
+
+// ==============================
+// 🎒 Model: Item
+// ==============================
+
+model Item {
+  @@map("item")
+
+  id         String        @id    // Ex: "pote_vida", "elmo_sagrado"
+  nome       String
+  tipo       String               // Ex: "elmo", "consumivel", "bota"
+  descricao  String
+  raridade   String
+
+  atributos  Json?                // Ex: { hp: 25, def: 12, hpRecuperado: 50 }
+  efeitos    Json?                // Ex: { passivo: 'Reduz em 10% o dano mágico' }
+
+  inventarios Inventario[]        // Relação inversa
+  criadoEm   DateTime      @default(now())
+}
+
+
+
+
+
+// ==============================
+// 🎒 Model: Inventario
+// ==============================
+
+model Inventario {
+  @@map("inventario")
+
+  id         String   @id @default(uuid())    // ID único do registro no inventário
+  jogadorId  String                           // Dono do item (Jogador)
+  itemId     String                           // Item armazenado
+  quantidade Int      @default(1)             // Quantidade do mesmo item no inv (ex: 5 poções)
+  equipado   Boolean  @default(false)         // True = item equipado / False = desequipado
+  criadoEm   DateTime @default(now())         // Timestamp de aquisição (quando ele ganhou o item)
+
+  jogador    Jogador  @relation(fields: [jogadorId], references: [id])
+  item       Item     @relation(fields: [itemId], references: [id])
+}
+
+
+
+
+
+// ==============================
+// 🤝 Model: Guilda
+// ==============================
+
+model Guilda {
+  @@map("guilda")
+
+  id          String   @id @default(uuid())
+  nome        String
+  descricao   String
+  liderId     String
+  criadoEm    DateTime @default(now())
+
+  // Relação com o líder da guilda
+  lider       Jogador  @relation("LiderDaGuilda", fields: [liderId], references: [id])
+
+  // Relação com os membros da guilda
+  membros     Jogador[] @relation("MembrosDaGuilda")
+}
+
+
+
+
+
+
+// ==============================
+// 🌎 Model: Mapa
+// ==============================
+
+model Mapa {
+  @@map("mapa")
+
+  id          String   @id @default(uuid())
+  nome        String
+  tipo        String                          // Ex: "cidade", "floresta", "dungeon"
+  descricao   String                          // Ex: "Cidade de Arkevia"
+  conexoes    Json?                           // Ex: { norte: "floresta_sombria", leste: "castelo_rasgado" }
+  npcs        Json?                           // Ex: ["ferreiro", "taverneiro"]
+  inimigos    Json?                           // Ex: ["lobisomem", "goblin"]
+  coordenada  Json?                           // ou String? se for string, but! Json é melhor pra objeto { x, y }
+  criadoEm    DateTime @default(now())
+
+  jogadoresNoMapa Jogador[]                   // relação inversa do localizacaoAtual no model Jogador
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ==============================
+//        !!! Enums !!!
+// ==============================
+
+enum Sexo {
+  masculino
+  feminino
+}
