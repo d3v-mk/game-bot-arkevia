@@ -1,4 +1,106 @@
-## 🧠 01/07/2025 - Branch: `mk/refactor&feat/viagem+mensagens`
+# 🗓️ 02/07/2025 15:00 — *feat: sistema de conquistas ativas e painel de status completo*
+
+## ✨ Funcionalidades Novas
+
+### 🏆 Sistema de Conquistas Ativas
+- Jogadores agora podem conquistar feitos únicos no jogo e exibi-los no `/status`.
+- **Novo comando:** `/conquistas usar <nome da conquista>` permite mostrar conquistas no `/status`.
+- Jogador pode exibir **até 3 conquistas ativas simultaneamente**.
+- Conquistas podem ser trocadas a qualquer momento com o comando acima.
+
+### 📊 Feat comando `/status`
+
+- Exibe agora:
+  - Atributos (força, defesa, etc.)
+  - Classe, XP, energia, moedas, localização atual
+  - **Conquistas ativas com emoji e nome** (até 3)
+
+- Busca do jogador inclui:
+  - `classe`
+  - `localizacaoAtual`
+  - `conquistasAtivas` com `conquista: true`
+
+## 🛠️ Refatorações & Estrutura
+
+### 📂 Comandos e Subcomandos
+
+- **Novo comando :** `/conquistas`
+  - Subcomando `usar`: ativa conquista específica.
+
+- **Novos subcomandos de admin:**
+  - `/admin promover`: transforma jogador em admin.
+  - `/admin darconquista <jogador> <nome | all>`: entrega uma ou todas conquistas a um jogador.
+  - `/admin sethp <jogador> <valor>`: define o HP de um jogador.
+
+### 🧱 Banco de Dados e Modelos
+
+- Novos modelos criados com Prisma:
+  - `Conquista` define as conquistas do jogo (nome, descrição, tipo, raridade...).
+  - `ConquistaDoJogador` registra quais conquistas cada jogador já desbloqueou.
+  - `ConquistaAtiva` indica quais conquistas estão ativas (visíveis no /status), limitado a 3.
+
+- Adicionada `seed/conquistasSeed.js` com conquistas como:
+  - *Admin de Arkevia 👑*
+  - *Desenvolvedor ⚙️*
+  - *Assasin ⚔️*
+  - *Explorador 🧭*
+  - *Explorador Nato ⏰*
+
+---
+
+# 🧠 01/07/2025 15:08 pm - `feat: new commands`
+
+## ✨ Novos Comandos Administrativos e Inventário
+
+### game/commands/admin
+
+- `/admin setxp [player] [xp]`  
+  - Define o XP exato do jogador indicado.
+
+- `/admin setlevel [player] [nível]`  
+  - Define o nível exato do jogador.
+
+- `/admin setenergia [player] [valor]`  
+  - Ajusta a energia atual do jogador.
+
+- `/admin setname [nomeAntigo] [novoNome]`  
+  - Renomeia um jogador, com validação de nome único e tamanho.
+
+- `/admin tp [player] [local]`  
+  - Teleporta o jogador para a localização especificada.
+
+- `/admin giveitem [player] [item] [quantidade]`  
+  - Dá itens para o jogador, somando à quantidade atual no inventário.
+
+- Todas as mensagens formatadas em `game/utils/mensagens/`
+
+> Obs: Todos os comandos admin funcionam apenas em chat privado e para jogadores com `isAdmin = true`.
+
+### game/commands/inventário
+
+- `/inventario`  
+  - Lista os itens no inventário do jogador.
+
+- `/inventario daritem [player] [item] [quantidade]`  
+  - Comando para um jogador dar um item para outro jogador (só funciona se os dois estiverem na mesma região)
+
+- `/inventario dropar [item] [quantidade]`
+  - Comando para o jogador dropar algum item do inventario
+
+- `/inventario usar [item]`
+  - Usa um item consumível do inventário (tipo poção de vida, mana etc.).
+  - Reduz a quantidade em 1, aplica o efeito (ex: cura HP), e exibe mensagem de uso.
+
+- `/inventario equipar [item]`
+  - Equipa um item de equipamento (ex: espada, armadura).
+  - Marca como `equipado: true` no inventário.
+  - Se já tiver outro item equipado no mesmo tipo (ex: arma), desequipa o atual antes.
+
+- Todas as mensagens formatadas em `game/utils/mensagens/`
+
+---
+
+# 🧠 01/07/2025 5:00 am - `mk/refactor&feat/viagem+mensagens`
 
 ## 🔨 Refatorações
 
@@ -87,12 +189,9 @@
   - Mostra descrição do destino ao chegar.
   - Mensagem criada com template visual e organizado em `utils/mensagens/viajar.js`.
 
-
-
-
 ---
 
-## 29/06/25 02:23 am - mk/feat/sistemas-jogador-e-mundo
+# 29/06/25 02:23 am - mk/feat/sistemas-jogador-e-mundo
 
 - Adicionei `level` ao modelo jogador no `schema.prisma` que será o level/nivel do jogador.
 - Adicionei `sexo` e uma `enum` para `sexo` ao modelo jogador no `schema.prisma` para saber se o player é H/M.
@@ -112,7 +211,7 @@
 
 ---
 
-## 28/06/25 17:40 pm - mk/refactor/habilidades-itens-estrutura
+# 28/06/25 17:40 pm - mk/refactor/habilidades-itens-estrutura
 
 - Padronizei todos os arquivos em `/seed/data/habilidades/` para usar `module.exports = {…}` no final de cada arquivo (padrão CommonJS)
 - Atualizei todos os arquivos em `/seed/data/habilidades/` para usar só `const` além de `export const` (padrão CommonJS)
@@ -131,7 +230,7 @@
 
 ---
 
-## 28/06/25 12:50 pm - mk/refactor/modularizar-seeds
+# 28/06/25 12:50 pm - mk/refactor/modularizar-seeds
 
 - Organização dos dados: Separei as habilidades em arquivos individuais dentro da pasta `seed/data/habilidades/` pra deixar o projeto mais modular e fácil de manter.
 
@@ -141,7 +240,7 @@
 
 ---
 
-## 28/06/25 02:00 am - Leonel Miguins - Criação da base do jogo
+# 28/06/25 02:00 am - Leonel Miguins - Criação da base do jogo
 
 * Criação da base do jogo ``game/arkevia-rpg.js``
 * Remoção "type": "module" do ``package.json``. Eu converti em CommonJS ``handlers/onMessage.js``, utilizando `require()` para importar módulos e `__dirname` para resolver caminhos de arquivos.
@@ -159,7 +258,7 @@
 
 ---
 
-## 27/06/25 22:40 pm - mk/feat/estrutura-inicial-banco-de-dados
+# 27/06/25 22:40 pm - mk/feat/estrutura-inicial-banco-de-dados
 
 * Organização de algumas pastas pra servir o banco
 * Modelos no Prisma pra Jogador, Classes e Habilidades, tudo amarradinho e pronto pra usar.

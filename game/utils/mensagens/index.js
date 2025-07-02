@@ -5,4 +5,5 @@ module.exports = {
   status: require('./status'),
   register: require('./register'),
   admin: require('./admin'),
+  inventario: require('./inventario'),
 };

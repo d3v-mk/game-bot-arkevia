@@ -71,6 +71,11 @@ model Jogador {
   localizacaoAtualId  String?  
   localizacaoAtual    Mapa? @relation(fields: [localizacaoAtualId], references: [id])
   viajando            Boolean  @default(false) // verifica se ja ta viajando
+
+  // === CONQUISTAS ===
+  conquistas       ConquistaDoJogador[]  // Relação inversa para conquistas do jogador
+  conquistasAtivas ConquistaAtiva[]      // Relação inversa para conquistas ativas
+
 }
 
 
@@ -109,6 +114,76 @@ model Habilidades {
   classeId     String
   classe       Classes  @relation(fields: [classeId], references: [id])
 }
+
+
+
+
+
+// ==============================
+//  💁🏻‍♂️ Model: Conquista
+// 	Catálogo: guarda todas as conquistas do jogo
+// ==============================
+
+model Conquista {
+  @@map("conquista")
+
+  id        Int      @id @default(autoincrement())
+  nome      String
+  descricao String
+  emoji     String?
+  tipo      String?
+  raridade  String?
+  data      DateTime @default(now())
+
+  jogadores   ConquistaDoJogador[]   // Relação inversa para jogadores que têm essa conquista
+  jogadoresAtivos ConquistaAtiva[]   // Relação inversa para jogadores com conquista ativa
+}
+
+
+
+
+// ==============================
+//  💁🏻‍♂️ Model: ConquistaDoJogador
+//  Marca quem ganhou qual conquista
+// ==============================
+
+model ConquistaDoJogador {
+  @@map("conquista_do_jogador")
+
+  id          String   @id @default(uuid())
+  jogadorId   String
+  conquistaId Int
+  recebidaEm  DateTime @default(now())
+
+  jogador     Jogador   @relation(fields: [jogadorId], references: [id], onDelete: Cascade)
+  conquista   Conquista @relation(fields: [conquistaId], references: [id], onDelete: Cascade)
+
+  @@unique([jogadorId, conquistaId])
+}
+
+
+
+
+// ==============================
+//  💁🏻‍♂️ Model: conquistaAtiva
+//  Marca quais conquistas estão “ativas” no /status
+// ==============================
+
+model ConquistaAtiva {
+  @@map("conquista_ativa")
+
+  id          String   @id @default(uuid())
+  jogadorId   String
+  conquistaId Int
+  ativadaEm   DateTime @default(now())
+  emUso       Boolean  @default(false)
+
+  jogador     Jogador   @relation(fields: [jogadorId], references: [id], onDelete: Cascade)
+  conquista   Conquista @relation(fields: [conquistaId], references: [id], onDelete: Cascade)
+
+  @@unique([jogadorId, conquistaId])
+}
+
 
 
 

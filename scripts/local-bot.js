@@ -70,6 +70,7 @@ async function simulateMessage(text, from, sock) {
 // Usuários fake pra simular troca
 const usuarios = {
   '5511999992222@c.us': 'mk',
+  '5511999991111@c.us': 'dev-mk',
 };
 
 const rl = readline.createInterface({

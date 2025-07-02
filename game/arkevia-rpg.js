@@ -3,7 +3,7 @@ const P = require('pino');
 const qrcode = require('qrcode-terminal');
 
 // imports
-const onMessage = require('./handlers/onMessage');
+const onMessage = require('./handlers/onMessageHandler');
 
 async function startSock() {
   const { state, saveCreds } = await useMultiFileAuthState('./auth');

@@ -1,24 +1,36 @@
+
+
 module.exports = {
 
   MensagemStatus: (jogador) => `
+    ╔═════ 𖠁 Sᴛᴀᴛᴜs ᴅᴇ ${jogador.nome}* 𖠁 ═════╗
 
-    📜 *STATUS DE ${jogador.nome.toUpperCase()}*
+    🎖️ *Level:* ${jogador.level}
+    🔰 *Classe:* ${jogador.classe.nome}
+    ✨ *XP:* ${jogador.xp}
+    ⚡️ *Energia:* ${jogador.energia}
+    ❤️ *HP:* ${jogador.hpAtual}/${jogador.hpMaximo}
+    💰 *Moedas:* ${jogador.moedas}
+    📍 *Localização:* ${jogador.localizacaoAtual.nome}
 
-    🧪 Classe: *${jogador.classe?.nome}*
-    🎖️ Level: *${jogador.level}* | XP: *${jogador.xp}*
-    💰 Moedas: *${jogador.moedas}*
+    ╠══════ 𖥤 Aᴛʀɪʙᴜᴛᴏs 𖥤 ══════╣
+    💪 *Força:* ${jogador.forca} 
+    🛡️ *Defesa:* ${jogador.defesa}
+    🏃 *Agilidade:* ${jogador.agilidade}
+    🧠 *Inteligência:* ${jogador.inteligencia}
+    🍀 *Sorte:* ${jogador.sorte}
 
-    ❤️ HP: *${jogador.hpAtual}/${jogador.hpMaximo}*
-    🔋 Mana: *${jogador.mana}* | ⚡ Energia: *${jogador.energia}*
-
-    💪 Força: *${jogador.forca}*
-    🛡️ Defesa: *${jogador.defesa}*
-    🏃 Agilidade: *${jogador.agilidade}*
-    🧠 Inteligência: *${jogador.inteligencia}*
-    🍀 Sorte: *${jogador.sorte}*
-
-    📅 Criado em: *${new Date(jogador.criadoEm).toLocaleDateString()}*
-    
-   `
+    ╠══════ 🏆 Cᴏɴǫᴜɪsᴛᴀs ═══════╣
+    ${
+      jogador.conquistasAtivas?.filter(ca => ca.emUso).length > 0
+        ? jogador.conquistasAtivas
+            .filter(ca => ca.emUso)
+            .slice(0, 3)
+            .map(ca => `🏅 ${ca.conquista.nome} ${ca.conquista.emoji || ''}`)
+            .join('\n')
+        : '_Nenhuma conquista ativa_'
+    }
+    ╚════════════════════════╝
+  `,
 
 };

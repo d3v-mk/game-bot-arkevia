@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 module.exports = async (msg, args, sock) => {
   const jid = msg.key.remoteJid;
 
-  // Evita rodar o comando em grupo
   if (jid.endsWith('@g.us')) {
     return await sock.sendMessage(jid, {
       text: mensagens.gerais.apenasPrivado,
@@ -15,10 +14,17 @@ module.exports = async (msg, args, sock) => {
 
   const numero = jid.split('@')[0];
 
-  // Busca o jogador no banco
   const jogador = await prisma.jogador.findUnique({
     where: { numeroWpp: numero },
-    include: { classe: true },
+    include: {
+      classe: true,
+      localizacaoAtual: true,
+      conquistasAtivas: {
+        include: {
+          conquista: true,
+        },
+      },
+    },
   });
 
   if (!jogador) {
