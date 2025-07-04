@@ -1,4 +1,4 @@
-# 🗓️ 04/07/2025 10:30 — *mk/feat/sistema-de-mapa-e-help*
+# 🗓️ 04/07/2025 10:30 — *mk/refactor-feat/sistema-de-mapa-e-help*
 
 ## ♻️ Refatorações
 - Todos os arquivos agora usam aliases com `@` para imports mais limpos e organizados.
