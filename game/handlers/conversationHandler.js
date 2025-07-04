@@ -12,7 +12,7 @@
  * - Permite que comandos como `/register` funcionem em várias etapas, sem precisar digitar tudo em uma mensagem.
  */
 
-const { estadosDeConversa } = require('../config/state');
+const { estadosDeConversa } = require('@config/state');
 
 async function handleConversationState(msg, args, sock) {
   const userId = msg.key.remoteJid;

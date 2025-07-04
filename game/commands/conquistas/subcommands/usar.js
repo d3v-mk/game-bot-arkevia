@@ -1,5 +1,5 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require('@lib/prisma');
+const mensagens = require('@utils/mensagens');
 
 module.exports = async (msg, args, sock, jogador) => {
   const jid = msg.key.remoteJid;

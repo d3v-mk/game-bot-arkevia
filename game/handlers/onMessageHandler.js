@@ -28,11 +28,11 @@
 
 
 const path = require('path');
-const carregarComandos = require('../core/commandLoader');
-const middlewares = require('../middlewares/loader');
-const { normalizarTexto } = require('../utils/normalizeText');
-const handleConversationState = require('./conversationHandler');
-const mensagens = require('../utils/mensagens');
+const carregarComandos = require('@core/commandLoader');
+const middlewares = require('@middleware/loader');
+const { normalizarTexto } = require('@utils/normalizeText');
+const handleConversationState = require('@handlers/conversationHandler');
+const mensagens = require('@utils/mensagens');
 
 const commandsDir = path.resolve(__dirname, '../commands');
 const commands = carregarComandos(commandsDir);

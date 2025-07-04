@@ -26,6 +26,7 @@
  */
 
 require('dotenv').config();
+require('module-alias/register');
 
 const readline = require('readline');
 const onMessage = require('../game/handlers/onMessageHandler.js');

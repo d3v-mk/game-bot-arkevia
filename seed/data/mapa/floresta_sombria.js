@@ -11,7 +11,7 @@ const floresta_sombria = {
   },
   npcs: [],
   inimigos: ['lobo', 'aranha_venenosa', 'goblin'],
-  coordenada: { x: 150, y: 100 },     // coordenada para ajudar no cálculo de viagens e tempo no /viajar
+  coordenada: { x: 300, y: 300 },     // coordenada para ajudar no cálculo de viagens e tempo no /viajar
   criadoEm: new Date(),
 };
 

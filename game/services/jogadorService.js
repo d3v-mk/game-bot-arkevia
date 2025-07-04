@@ -27,8 +27,7 @@
  * - Deixa o código mais limpo, testável e desacoplado da lógica de banco direto.
  */
 
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require('@lib/prisma');
 
 async function getJogadorPorJid(jid) {
   const numero = jid.split('@')[0];

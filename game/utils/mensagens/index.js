@@ -6,4 +6,5 @@ module.exports = {
   register: require('./register'),
   admin: require('./admin'),
   inventario: require('./inventario'),
+  help: require('./help'),
 };

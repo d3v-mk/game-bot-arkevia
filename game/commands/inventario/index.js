@@ -1,9 +1,9 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require('@lib/prisma');
+const mensagens = require('@utils/mensagens');
+
 const path = require('path');
 const fs = require('fs');
 
-const mensagens = require('../../utils/mensagens');
 
 const subcommands = {};
 

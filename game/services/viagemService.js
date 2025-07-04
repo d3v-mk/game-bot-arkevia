@@ -26,13 +26,10 @@
  * deixando os comandos mais limpos e o código mais modular.
  */
 
-const { buscarDestinoPorId, calcularDistancia } = require('./destinoService');
-const {
-  getJogadorPorJid,
-  atualizarLocalizacaoEenergia,
-  iniciarViagem,
-  finalizarViagem,
-} = require('./jogadorService');
+const { buscarDestinoPorId, calcularDistancia } = require('@services/destinoService');
+
+const { getJogadorPorJid, atualizarLocalizacaoEenergia, 
+  iniciarViagem, finalizarViagem, } = require('@services/jogadorService');
 
 /**
  * Retorna o custo de energia com base na distância entre localizações.

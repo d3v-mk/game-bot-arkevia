@@ -1,9 +1,11 @@
+require('module-alias/register');
+
 const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = require('@whiskeysockets/baileys');
 const P = require('pino');
 const qrcode = require('qrcode-terminal');
 
 // imports
-const onMessage = require('./handlers/onMessageHandler');
+const onMessage = require('@handlers/onMessageHandler');
 
 async function startSock() {
   const { state, saveCreds } = await useMultiFileAuthState('./auth');

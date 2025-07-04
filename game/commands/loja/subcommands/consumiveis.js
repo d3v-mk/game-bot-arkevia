@@ -12,8 +12,9 @@
  * `itemService.js` para obter os dados.
  */
 
-const { carregarTodosItens } = require('../../../services/itemService');
-const mensagens = require('../../../utils/mensagens');
+const { carregarTodosItens } = require('@services/itemService');
+
+const mensagens = require('@utils/mensagens');
 
 module.exports = async (msg, args, sock) => {
   const jid = msg.key.remoteJid;

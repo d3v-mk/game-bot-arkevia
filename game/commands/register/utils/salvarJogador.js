@@ -16,10 +16,10 @@
 
 require('dotenv').config();
 
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require('@lib/prisma');
 
-const { vilarejo_inicial } = require('../../../../seed/data/mapa/vilarejo_inicial');
+const vilarejo_inicial = require('@mapa/vilarejo_inicial');
+
 
 async function salvarJogador({ nome, email, sexo, classeId, numeroWpp }) {
   const jaExiste = await prisma.jogador.findUnique({ where: { numeroWpp } });

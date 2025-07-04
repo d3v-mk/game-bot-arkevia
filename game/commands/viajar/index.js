@@ -1,8 +1,8 @@
-const { getJogadorPorJid } = require('../../services/jogadorService');
-const { buscarDestinoPorNome, calcularDistancia } = require('../../services/destinoService');
-const { calcularCustoEnergia } = require('../../services/viagemService');
-const { confirmacoesViagem } = require('../../config/state');
-const mensagens = require('../../utils/mensagens');
+const { getJogadorPorJid } = require('@services/jogadorService');
+const { buscarDestinoPorNome, calcularDistancia } = require('@services/destinoService');
+const { calcularCustoEnergia } = require('@services/viagemService');
+const { confirmacoesViagem } = require('@config/state');
+const mensagens = require('@utils/mensagens');
 
 module.exports = async (msg, args, sock) => {
   const jid = msg.key.remoteJid;

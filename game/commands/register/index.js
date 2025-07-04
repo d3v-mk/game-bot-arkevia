@@ -22,11 +22,11 @@
  * Este módulo deve ser chamado diretamente pelo comando `/register` que é o NOME DA PASTA PAI.
  */
 
-const { perguntas } = require('./utils/perguntas');
-const { emailValido, sexoValido, classeValida } = require('./utils/validacoes');
-const { salvarJogador } = require('./utils/salvarJogador');
-const { estadosDeConversa } = require('../../config/state');
-const mensagens = require('../../utils/mensagens');
+const { perguntas } = require('@utilsRegister/perguntas');
+const { emailValido, sexoValido, classeValida } = require('@utilsRegister/validacoes');
+const { salvarJogador } = require('@utilsRegister/salvarJogador');
+const { estadosDeConversa } = require('@config/state');
+const mensagens = require('@utils/mensagens');
 
 async function tratarFluxoRegister(msg, args, sock, estado) {
   const jid = msg.key.remoteJid;

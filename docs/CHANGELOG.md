@@ -1,9 +1,32 @@
-# 🗓️ 02/07/2025 15:00 — *feat: sistema de conquistas ativas e painel de status completo*
+# 🗓️ 04/07/2025 10:30 — *mk/feat/sistema-de-mapa-e-help*
+
+## ♻️ Refatorações
+- Todos os arquivos agora usam aliases com `@` para imports mais limpos e organizados.
+  - Ex: `require('@utils/mensagens')` ao invés de caminhos relativos enormes.
+
+## ✨ Novas Funcionalidades
+- **Sistema de mapa interativo (/mapa):**
+  - Jogadores agora podem visualizar onde estão no mundo com um ponto vermelho desenhado no mapa.
+  - A imagem base (`mapa_global.png`) fica em `game/imgs/mapa/`.
+  - A coordenada atual do jogador é obtida via banco e desenhada com `canvas`.
+  - A imagem é gerada 100% em memória e enviada via WhatsApp como JPEG.
+
+- **Script de debug de mapa:**
+  - Criado `scripts/salvar-mapa.js` para gerar e salvar o mapa localmente.
+  - Basta alterar a coordenada e rodar `node scripts/salvar-mapa.js`.
+
+## 🧪 Novos Comandos
+- `/mapa`: mostra o local atual do jogador no mapa global.
+- `/help`: exibe os comandos disponíveis (versão básica implementada).
+
+---
+
+# 🗓️ 02/07/2025 15:00 — *mk/feat/sistema-de-conquistas-e-status*
 
 ## ✨ Funcionalidades Novas
 
-### 🏆 Sistema de Conquistas Ativas
-- Jogadores agora podem conquistar feitos únicos no jogo e exibi-los no `/status`.
+### 🏆 Sistema de Conquistas
+- Jogadores agora podem desbloquear conquistas no jogo e exibi-los no `/status`.
 - **Novo comando:** `/conquistas usar <nome da conquista>` permite mostrar conquistas no `/status`.
 - Jogador pode exibir **até 3 conquistas ativas simultaneamente**.
 - Conquistas podem ser trocadas a qualquer momento com o comando acima.
@@ -13,7 +36,7 @@
 - Exibe agora:
   - Atributos (força, defesa, etc.)
   - Classe, XP, energia, moedas, localização atual
-  - **Conquistas ativas com emoji e nome** (até 3)
+  - **Conquistas com emoji e nome** (até 3)
 
 - Busca do jogador inclui:
   - `classe`
@@ -25,10 +48,10 @@
 ### 📂 Comandos e Subcomandos
 
 - **Novo comando :** `/conquistas`
-  - Subcomando `usar`: ativa conquista específica.
+  - Subcomando `/conquistas usar`: ativa conquista específica no perfil `/status`.
 
 - **Novos subcomandos de admin:**
-  - `/admin promover`: transforma jogador em admin.
+  - `/admin promover <jogador>`: promove jogador a admin.
   - `/admin darconquista <jogador> <nome | all>`: entrega uma ou todas conquistas a um jogador.
   - `/admin sethp <jogador> <valor>`: define o HP de um jogador.
 
@@ -41,14 +64,14 @@
 
 - Adicionada `seed/conquistasSeed.js` com conquistas como:
   - *Admin de Arkevia 👑*
-  - *Desenvolvedor ⚙️*
+  - *Dev. de Arkevia ⚙️*
   - *Assasin ⚔️*
   - *Explorador 🧭*
   - *Explorador Nato ⏰*
 
 ---
 
-# 🧠 01/07/2025 15:08 pm - `feat: new commands`
+# 🧠 01/07/2025 15:08 pm - *feat: new commands*
 
 ## ✨ Novos Comandos Administrativos e Inventário
 
@@ -100,7 +123,7 @@
 
 ---
 
-# 🧠 01/07/2025 5:00 am - `mk/refactor&feat/viagem+mensagens`
+# 🧠 01/07/2025 5:00 am - *mk/refactor&feat/viagem+mensagens*
 
 ## 🔨 Refatorações
 

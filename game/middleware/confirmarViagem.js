@@ -12,12 +12,12 @@
  * - Facilita interações em etapas no universo do RPG.
  */
 
-const { confirmacoesViagem } = require('../config/state');
-const { normalizarTexto } = require('../utils/normalizeText');
-const { getJogadorPorJid, iniciarViagem, finalizarViagem } = require('../services/jogadorService');
-const { executarViagem } = require('../services/viagemService');
-const { formatarTempoSegundos } = require('../commands/viajar/utils/tempo');
-const mensagens = require('../utils/mensagens')
+const { confirmacoesViagem } = require('@config/state');
+const { normalizarTexto } = require('@utils/normalizeText');
+const { getJogadorPorJid, iniciarViagem, finalizarViagem } = require('@services/jogadorService');
+const { executarViagem } = require('@services/viagemService');
+const { formatarTempoSegundos } = require('@commands/viajar/utils/tempo');
+const mensagens = require('@utils/mensagens')
 
 module.exports = async function confirmarViagem(msg, sock) {
   const texto = normalizarTexto(msg.body.trim());

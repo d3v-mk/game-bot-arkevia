@@ -19,7 +19,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { normalizarTexto } = require('../utils/normalizeText');
+const { normalizarTexto } = require('@utils/normalizeText');
 
 function carregarComandos(dir, baseCommand = '') {
   const commands = {};
